@@ -76,26 +76,22 @@ The test set was carved out from the original validation split using a balanced 
 
 ## Results
 
-### RF-DETR — Test Set
+### RF-DETR — Best Segmentation Results (Validation Set)
 
-| Metric        | Bbox   | Mask   |
-|---------------|--------|--------|
-| mAP@50        | 88.52% | —      |
-| mAP@50:95     | 44.92% | —      |
-| Precision     | 84.59% | —      |
-| Recall        | 81.07% | —      |
-| F1-Score      | 82.79% | —      |
+| Setting              | Best Epoch | mAP@50 (Mask) | mAP@50–95 (Mask) | F1-Score |
+|----------------------|-----------|---------------|------------------|----------|
+| Regular              | 5         | 86.15%        | 36.88%           | 80.94%   |
+| EMA                  | 8         | 89.74%        | 36.46%           | 85.06%   |
+| EMA (highest mAP@50) | 10        | **90.19%**    | **34.79%**       | **86.13%** |
 
-> EMA model (best checkpoint): mAP@50 = **89.37%** (bbox), **88.27%** (mask)
+### YOLOv26 — Best Segmentation Results by Variant (Validation Set)
 
-### YOLOv26 — Validation Set (epoch 10)
-
-| Metric            | Box    | Mask   |
-|-------------------|--------|--------|
-| mAP@50            | 64.49% | 66.58% |
-| mAP@50-95         | 31.04% | 29.47% |
-| Precision         | 75.60% | 76.88% |
-| Recall            | 54.81% | 56.04% |
+| Model         | Best Epoch | mAP@50 (Mask) | mAP@50–95 (Mask) |
+|---------------|-----------|---------------|------------------|
+| YOLOv26n-seg  | 25        | 62.63%        | 27.44%           |
+| YOLOv26s-seg  | 17        | 64.88%        | 27.24%           |
+| YOLOv26m-seg  | 19        | **66.66%**    | **29.51%**       |
+| YOLOv26l-seg  | 10        | 64.17%        | 26.88%           |
 
 ---
 

@@ -99,16 +99,16 @@ jupyter notebook src_yolov26_ripvis/train.ipynb
 
 ---
 
-## Results (train7 — epoch 10)
+## Results — Best Segmentation by Variant (Validation Set)
 
-| Metric            | Box    | Mask   |
-|-------------------|--------|--------|
-| mAP@50            | 64.49% | 66.58% |
-| mAP@50-95         | 31.04% | 29.47% |
-| Precision         | 75.60% | 76.88% |
-| Recall            | 54.81% | 56.04% |
+| Model         | Best Epoch | mAP@50 (Mask) | mAP@50–95 (Mask) |
+|---------------|-----------|---------------|------------------|
+| YOLOv26n-seg  | 25        | 62.63%        | 27.44%           |
+| YOLOv26s-seg  | 17        | 64.88%        | 27.24%           |
+| YOLOv26m-seg  | 19        | **66.66%**    | **29.51%**       |
+| YOLOv26l-seg  | 10        | 64.17%        | 26.88%           |
 
-Training curves and confusion matrices are saved in `train7/`.
+Best overall variant: **YOLOv26m-seg** (epoch 19). Training curves and confusion matrices are saved in `train7/`.
 
 ---
 
