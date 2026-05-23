@@ -142,6 +142,100 @@ The data processing notebook covers:
 
 ---
 
+## How to Use the Model
+
+### RF-DETR — Inference
+
+```python
+from rfdetr import RFDETRMedium
+from rfdetr.util.coco_utils import get_coco_api_from_dataset
+import supervision as sv
+from PIL import Image
+
+# Load model with trained weights
+model = RFDETRMedium(pretrain_weights="rf-detr/src/rf-detr-seg-medium.pt")
+
+# Run inference on a single image
+image = Image.open("path/to/image.jpg")
+detections = model.predict(image, threshold=0.5)
+
+# Visualise with supervision
+annotator = sv.MaskAnnotator()
+annotated = annotator.annotate(
+    scene=image.copy(),
+    detections=detections
+)
+annotated.show()
+```
+
+To run inference on a folder of images:
+
+```python
+import os
+from PIL import Image
+
+image_dir = "rf-detr/data_rfdetr_final/test"
+for fname in os.listdir(image_dir):
+    if fname.endswith(".jpg"):
+        image = Image.open(os.path.join(image_dir, fname))
+        detections = model.predict(image, threshold=0.5)
+        print(f"{fname}: {len(detections)} detection(s)")
+```
+
+> **Checkpoint location:** trained weights are saved under `rf-detr/output/eval/latest.pth` (standard) or `rf-detr/output_continue_ema/eval/latest.pth` (EMA run). Pass the `.pth` path to `pretrain_weights` to load a specific checkpoint.
+
+---
+
+### YOLOv26 — Inference
+
+```python
+from ultralytics import YOLO
+
+# Load trained model
+model = YOLO("yolov26/train7/weights/best.pt")
+
+# Predict on a single image
+results = model.predict(
+    source="path/to/image.jpg",
+    imgsz=640,
+    conf=0.25,
+    iou=0.45,
+    save=True          # saves annotated image to runs/segment/predict/
+)
+
+# Inspect detections
+for r in results:
+    print(r.boxes)     # bounding boxes
+    print(r.masks)     # segmentation masks
+```
+
+Batch inference on a directory:
+
+```python
+results = model.predict(
+    source="path/to/images/",
+    imgsz=640,
+    conf=0.25,
+    save=True,
+    save_txt=True      # also saves labels in YOLO format
+)
+```
+
+Video inference:
+
+```python
+results = model.predict(
+    source="path/to/video.mp4",
+    imgsz=640,
+    conf=0.25,
+    save=True          # saves annotated video
+)
+```
+
+> **Checkpoint location:** `yolov26/train7/weights/best.pt` (best mAP) or `last.pt` (final epoch).
+
+---
+
 ## Requirements
 
 | Package         | Version tested |
